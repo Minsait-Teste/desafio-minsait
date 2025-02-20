@@ -2,8 +2,8 @@ import { jest } from "@jest/globals";
 import { tasksService } from "../../services/tasksService.js";
 import { tasksRepository } from "../../repositories/tasksRepository.js";
 
-import { CreateTaskData } from "./../../services/tasksService.js"
-import prisma from "./../../config/database.js";
+import { CreateTaskData } from "../../services/tasksService.js"
+import prisma from "../../config/database.js";
 
 describe("tasks Services createTask function tests suite", () => {
 
