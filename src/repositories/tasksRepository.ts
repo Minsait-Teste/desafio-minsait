@@ -1,9 +1,7 @@
 import prisma from "../config/database.js";
 import { CreateTaskData } from "./../services/tasksService.js"
 
-
-async function registerTask(task) {
-    // await prisma.task.create({data: task})
+async function registerTask(task: CreateTaskData) {
     await prisma.task.create({data: task})
 }
 
