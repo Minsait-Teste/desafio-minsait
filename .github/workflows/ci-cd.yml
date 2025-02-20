@@ -18,6 +18,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Check if tsconfig.json exists
+        run: |
+          if [ ! -f tsconfig.json ]; then
+            echo "🚨 ERROR: tsconfig.json is missing. It is required for the build process."
+            exit 1
+          fi
+        shell: bash
+
       # Configurar a versão do Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
