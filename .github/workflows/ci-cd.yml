@@ -28,3 +28,12 @@ jobs:
       # Instalar dependências
       - name: Install dependencies
         run: npm install
+
+      # Executar testes unitários
+      - name: Run unit tests
+        run: npm test
+
+      # Construir a aplicação
+      - name: Build the application
+        run: npm run build
+
