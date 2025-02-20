@@ -37,3 +37,15 @@ jobs:
       - name: Build the application
         run: npm run build
 
+      # Criar uma release no GitHub e anexar o artefato
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: dist/**
+
+      # Notificar sucesso
+      - name: Notify success
+        run: echo "🚀 Release created successfully!"
+
