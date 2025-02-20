@@ -1,0 +1,30 @@
+name: CI/CD Pipeline for TypeScript API
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_VERSION: 18
+
+    steps:
+      # Checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Configurar a versão do Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      # Instalar dependências
+      - name: Install dependencies
+        run: npm install
