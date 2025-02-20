@@ -46,8 +46,12 @@ jobs:
       - name: Create Git tag
         run: |
           git tag -a v1.0.${{ github.run_number }} -m "Release v1.0.${{ github.run_number }}"
-          git push origin v1.0.${{ github.run_number }}
 
+    # Push da tag usando o GITHUB_TOKEN
+      - name: Push Tag to GitHub
+        run: |
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} v1.0.14
+          
       # Criar uma release no GitHub e anexar o artefato
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
