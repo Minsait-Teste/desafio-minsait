@@ -19,8 +19,8 @@ const generateToken = async (credentials : any) => {
 
         const token = jwt.sign({ username }, secretKey);
 
-        return token
-};
+        return { access_token: token }; // Retorna no formato correto
+    };
 
 export const authService = {
     generateToken
