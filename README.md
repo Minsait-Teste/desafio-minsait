@@ -5,7 +5,7 @@
 ```bash
 git clone https://github.com/Minsait-Teste/desafio-minsait.git
 ```
-2. Instalar as dependências
+2. Ao entrar na pasta do projeto, instalar as dependências
 ```bash
 npm i
 ```
@@ -14,11 +14,17 @@ npm i
 PORT=
 DATABASE_URL=
 ```
-4. No campo PORT, colocar 5000, e o database seguir o seguinte exemplo:
+4. No campo PORT, colocar 5000, no campo JWT_SECRET_KEY, colocar qualque string, e o database seguir o seguinte exemplo:
 ```bash
-DATABASE_URL=postgres://postgres:senhaDoPostgres@localhost:5432/nomeDoBanco
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/teste?schema=public
 ```
-5. Gerar a migração com o prisma
+
+5. Criar um banco de dados para teste com o docker compose
+```bash
+docker compose up -d
+```
+
+6. Gerar a migração com o prisma
 ```bash
 npx prisma migrate dev
 ```
@@ -30,56 +36,74 @@ npx prisma generate
 ```bash
 npm run dev
 ```
-## Como rodar os testes unitários
-1. Criar um arquivo .env.test na raíz do projeto com os seguintes campos
+
+A seguinte mensagem de sucesso deve aparecer: Server is listening on port 5000.
+
+## Como abrir o swagger para testar as rotas
+1. Abra o terminal com a seguinte url:
+
 ```bash
-PORT=
-DATABASE_URL=
-```
-2. No campo PORT, colocar 5000, e o database seguir o seguinte exemplo:
-```bash
-DATABASE_URL=postgres://postgres:senhaDoPostgres@localhost:5432/nomeDoBanco_test
-```
-3. Rodar o seguinte comando:
-```bash
-npm run test:unit
+http://localhost:5000/api-docs/
 ```
 ## Endpoints utilizados no projeto
 
-1. Rota de criação de empresas:
+1. Rota de geração de token:
 ```bash
-POST ("/companies")
+POST ("/auth")
 
 Formato do Body:
 {
-    name: "Nome da empresa",
-    cnpj: "XX.XXX.XXX/0001-XX",
-    address: "Endereço da empresa"
+  "username": "admin",
+  "password": "123456"
 }
 
-Nenhum campo pode estar vazio, e o cnpj precisa seguir este formato, respeitando os pontos, barra e traço indicados no modelo.
+O username e o password devem conter esses valores para retornar o token.
+
+Todas as rotas só funcionam usando esse token para autenticação
+
+Formato do Header: Authorization: Bearer Token
+
 ```
-2. Rota de busca de empresas:
+
+2. Rota de criação de tasks:
 ```bash
-GET ("/companies")
+POST ("/tasks")
+
+Formato do Body:
+{
+  "title": "Task 3",
+  "description": "Tarefa 3",
+  "status": "PENDENTE"
+}
+
+Nenhum campo pode estar vazio, e o campo status só aceita os valores PENDENTE e CONCLUIDA.
 ```
-3. Rota de apagar uma empresa:
+3. Rota de busca de tasks:
 ```bash
-DELETE ("/companies/:id")
+GET ("/tasks")
+```
+4. Rota de busca de task por id:
+```bash
+GET ("/tasks:id")
+```
+
+5. Rota de apagar uma task:
+```bash
+DELETE ("/tasks/:id")
 
 Caso seja inserido um id inválido, a aplicação devolve um erro.
 ```
-4. Rota de atualizar uma empresa:
+6. Rota de atualizar uma task:
 ```bash
-PUT ("/companies/:id")
+PUT ("/tasks/:id")
 
 Formato do Body:
 {
-    name: "Nome da empresa",
-    cnpj: "XX.XXX.XXX/0001-XX",
-    address: "Endereço da empresa"
+  "title": "Task 3",
+  "description": "Tarefa 3",
+  "status": "PENDENTE"
 }
-A rota aceita campos vazios, porém se o cnpj for preenchido com algum valor, o formato de exemplo precisa ser respeitado.
+A rota aceita campos vazios
 Caso seja inserido um id inválido, a aplicação devolve um erro.
 ```
 
