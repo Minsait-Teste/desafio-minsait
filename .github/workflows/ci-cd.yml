@@ -38,6 +38,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.branch.name=main
+
       # - name: Run SonarQube analysis
       #   run: |
       #     npx sonar-scanner \
@@ -47,13 +58,6 @@ jobs:
       #       -Dsonar.token=${{ secrets.SONAR_TOKEN }}
       #   env:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-      - name: Análise de Código com SonarQube
-        uses: SonarSource/sonarcloud-github-action@v1
-        with:
-          sonar-projectKey: ${{ secrets.SONAR_PROJECT_KEY }}  # Substitua pelo seu projeto key
-          sonar-token: ${{ secrets.SONAR_TOKEN }}  # Adicione o token como um segredo no GitHub
-          sonar-host-url: ${{ secrets.SONAR_HOST_URL }}  # URL do seu SonarQube
 
       # Executar testes unitários
       - name: Run unit tests
