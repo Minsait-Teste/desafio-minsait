@@ -37,6 +37,12 @@ jobs:
       - name: Build the application
         run: npm run build
 
+      # Criar uma tag automaticamente e empurrá-la
+      - name: Create Git tag
+        run: |
+          git tag -a v1.0.${{ github.run_number }} -m "Release v1.0.${{ github.run_number }}"
+          git push origin v1.0.${{ github.run_number }}
+
       # Criar uma release no GitHub e anexar o artefato
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
