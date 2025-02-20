@@ -65,9 +65,8 @@ jobs:
       #   run: echo "🚀 Release created successfully!"
 
       - name: Create Release Artifact
-          run: |
-            mkdir -p release
-            cp -r dist/* release/ # Supondo que a saída da build esteja na pasta 'dist'
+        run: mkdir -p release && cp -r dist/* release/
+
 
         - name: Upload Release Artifact
           uses: actions/upload-artifact@v2
