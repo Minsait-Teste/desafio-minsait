@@ -30,7 +30,6 @@ async function updateTask(task : CreateTaskData, taskId : number) {
 
 async function checkTaskId (taskId : number) {
     const response = await tasksRepository.checkTaskById(taskId);
-    console.log("Response: ", response)
 
     if (!response) {
         throw { name: "notFound", message: "Task not found"}
