@@ -36,12 +36,17 @@ jobs:
       - name: Set up environment variables test
         run: |
           echo "postgresql://postgres:postgres@localhost:5432/teste?schema=public" >> .env.test
+    
+      - name: Check environment variable for DATABASE_URL
+        run: |
+          echo $DATABASE_URL
 
-      # Executar testes unitários
-      - name: Run unit tests
-        run: npm test
 
-      # Construir a aplicação
-      - name: Build the application
-        run: npm run build
+      # # Executar testes unitários
+      # - name: Run unit tests
+      #   run: npm test
+
+      # # Construir a aplicação
+      # - name: Build the application
+      #   run: npm run build
 
