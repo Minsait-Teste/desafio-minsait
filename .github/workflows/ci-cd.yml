@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Check if tsconfig.json exists
         run: |
           if [ ! -f tsconfig.json ]; then
@@ -31,6 +28,9 @@ jobs:
 
     steps:
       # Configurar a versão do Node.js
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
