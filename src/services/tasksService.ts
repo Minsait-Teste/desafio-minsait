@@ -12,6 +12,7 @@ async function listTasks() {
 }
 
 async function listTaskById(taskId : number) {
+    await tasksService.checkTaskId(taskId);
     const task = await tasksRepository.checkTaskById(taskId)
     return task;
 }
@@ -29,6 +30,8 @@ async function updateTask(task : CreateTaskData, taskId : number) {
 
 async function checkTaskId (taskId : number) {
     const response = await tasksRepository.checkTaskById(taskId);
+    console.log("Response: ", response)
+
     if (!response) {
         throw { name: "notFound", message: "Task not found"}
     }

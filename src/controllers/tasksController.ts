@@ -3,7 +3,6 @@ import { tasksService } from "../services/tasksService.js";
 
 export async function createTask (req: Request, res: Response) {
     await tasksService.createTask(req.body);
-    console.log(req.body)
     res.status(201).send('Task created');
 }
 
