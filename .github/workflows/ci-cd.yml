@@ -44,9 +44,9 @@ jobs:
           name: release-artifact
           path: dist/
 
- deploy:
+  deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build_and_release
     if: success()  # Este trabalho só será executado se o trabalho de build for bem-sucedido
     steps:
       - name: Checkout code
