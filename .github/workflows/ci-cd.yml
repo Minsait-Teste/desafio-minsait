@@ -37,12 +37,12 @@ jobs:
       - name: Build the application
         run: npm run build
 
-      - name: Create Release Artifact
-        run: mkdir -p release && cp -r dist/* release/
+      # - name: Create Release Artifact
+      #   run: mkdir -p release && cp -r dist/* release/
 
       - name: Upload Release Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: release-artifact
-          path: release/
+          path: dist/
 
