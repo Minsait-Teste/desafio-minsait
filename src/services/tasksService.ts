@@ -32,10 +32,12 @@ async function checkTaskId(taskId: number) {
     const response = await tasksRepository.checkTaskById(taskId);
 
     if (!response) {
-        const error = new Error("Task not found");
-        (error as any).name = "notFound";
-        throw error;
+        throw {
+            name: "notFound",
+            message: "Task not found"
+        }; // Lançando um erro no formato esperado pelo teste
     }
+    
     return response;
 }
 
