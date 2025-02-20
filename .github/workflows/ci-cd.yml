@@ -37,40 +37,12 @@ jobs:
       - name: Build the application
         run: npm run build
 
-    #   - name: Set Git identity
-    #     run: |
-    #       git config user.name "GitHub Actions"
-    #       git config user.email "mauricio.ecamilo@gmail.com"
-
-    #   # Criar uma tag automaticamente e empurrá-la
-    #   - name: Create Git tag
-    #     run: |
-    #       git tag -a v1.0.${{ github.run_number }} -m "Release v1.0.${{ github.run_number }}"
-
-    # # Push da tag usando o GITHUB_TOKEN
-    #   - name: Push Tag to GitHub
-    #     run: |
-    #       git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} v1.0.${{ github.run_number }}
-
-    #   # Criar uma release no GitHub e anexar o artefato
-    #   - name: Create GitHub Release
-    #     uses: softprops/action-gh-release@v1
-    #     env:
-    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     with:
-    #       files: dist/**
-
-      # # Notificar sucesso
-      # - name: Notify success
-      #   run: echo "🚀 Release created successfully!"
-
       - name: Create Release Artifact
         run: mkdir -p release && cp -r dist/* release/
 
-
-        - name: Upload Release Artifact
-          uses: actions/upload-artifact@v2
-          with:
-            name: release-artifact
-            path: release/
+      - name: Upload Release Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-artifact
+          path: release/
 
