@@ -5,20 +5,26 @@ export function validateTokenMiddleware(req: Request, res: Response, next: NextF
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        throw { name: "notAuthorized", message: "Token not provided or invalid" };
+        const error = new Error("Token not provided or invalid");
+        (error as any).name = "notAuthorized";
+        throw error;
     }
 
     const token = authHeader.split(" ")[1];
     const secretKey = process.env.JWT_SECRET_KEY;
 
     if (!secretKey) {
-        throw { name: "ConnectionError", message: "JWT secret key is not set in environment variables" };
+        const error = new Error("JWT secret key is not set in environment variables");
+        (error as any).name = "ConnectionError";
+        throw error;
     }
 
     try {
-        const decoded = jwt.verify(token, secretKey);
+        jwt.verify(token, secretKey);
         next();
     } catch (error) {
-        throw { name: "notAuthorized", message: "Invalid token" };
+        const err = new Error("Invalid token");
+        (err as any).name = "notAuthorized";
+        throw err;
     }
 }

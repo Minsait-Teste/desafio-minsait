@@ -1,27 +1,32 @@
-// import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-const generateToken = async (credentials : any) => {
-        const { username, password } = credentials;
+const generateToken = async (credentials: any) => {
+    const { username, password } = credentials;
 
-        if (!username || !password) {
-            throw { name: "validationError", message: "Username and password are required" };
-        }
+    if (!username || !password) {
+        const error = new Error("Username and password are required");
+        (error as any).name = "validationError";
+        throw error;
+    }
 
-        if (username !== "admin" || password !== "123456") {
-            throw { name: "notAuthorized", message: "Invalid username or password" };
-        }
+    if (username !== "admin" || password !== "123456") {
+        const error = new Error("Invalid username or password");
+        (error as any).name = "notAuthorized";
+        throw error;
+    }
 
-        const secretKey = process.env.JWT_SECRET_KEY;
-        if (!secretKey) {
-            throw { name: "ConnectionError", message: "JWT secret key is not set in the environment variables" };
-        }
+    const secretKey = process.env.JWT_SECRET_KEY;
+    if (!secretKey) {
+        const error = new Error("JWT secret key is not set in the environment variables");
+        (error as any).name = "ConnectionError";
+        throw error;
+    }
 
-        const token = jwt.sign({ username }, secretKey);
+    const token = jwt.sign({ username }, secretKey);
 
-        return { access_token: token }; // Retorna no formato correto
-    };
+    return { access_token: token }; // Retorna no formato correto
+};
 
 export const authService = {
     generateToken
-}
+};

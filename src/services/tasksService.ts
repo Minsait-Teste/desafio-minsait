@@ -28,13 +28,15 @@ async function updateTask(task : CreateTaskData, taskId : number) {
     await tasksRepository.updateTaskById(updatedTaskData, taskId);
 }
 
-async function checkTaskId (taskId : number) {
+async function checkTaskId(taskId: number) {
     const response = await tasksRepository.checkTaskById(taskId);
 
     if (!response) {
-        throw { name: "notFound", message: "Task not found"}
+        const error = new Error("Task not found");
+        (error as any).name = "notFound";
+        throw error;
     }
-    else return response;
+    return response;
 }
 
 function updatedTaskData(updatedTaskData : CreateTaskData, previousTaskData : CreateTaskData) {
