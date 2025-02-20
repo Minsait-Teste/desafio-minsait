@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-  title: "API do Teste Santander"
+  title: "API do Teste Minsait"
   description: |
     Documentação da API utilizada no aplicativo Sebrae.
   version: "0.0.1"
