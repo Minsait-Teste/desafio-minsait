@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-  title: "Match<IT> API"
+  title: "API do Teste Santander"
   description: |
     Documentação da API utilizada no aplicativo Sebrae.
   version: "0.0.1"
@@ -15,6 +15,27 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
+  schemas:
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "Nova Tarefa"
+        description:
+          type: string
+          example: "Descrição detalhada da tarefa"
+        status:
+          type: string
+          example: "PENDENTE"
+      required:
+        - title
+        - description
+        - status
 
 paths:
   /auth:
@@ -49,13 +70,143 @@ paths:
                   access_token:
                     type: string
                     example: seu_token_aqui
-                  token_type:
-                    type: string
-                    example: Bearer
-                  expires_in:
-                    type: integer
-                    example: 3600
-        "400":
-          description: Requisição inválida - username ou password ausentes
         "401":
-          description: Não autorizado - credenciais inválidas
+          description: Invalid username or password
+        "422":
+          description: Username and password are required
+
+  /tasks:
+    get:
+      summary: Lista todas as tarefas
+      tags:
+        - Tasks
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Lista de tarefas recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+        "401":
+          description: Token not provided or invalid
+
+    post:
+      summary: Cria uma nova tarefa
+      tags:
+        - Tasks
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Nova Tarefa"
+                description:
+                  type: string
+                  example: "Descrição detalhada da tarefa"
+                status:
+                  type: string
+                  example: "PENDENTE"
+              required:
+                - title
+                - description
+                - status
+      responses:
+        "201":
+          description: Task created
+        "401":
+          description: Token not provided or invalid
+        "422":
+          description: Error Unprocessable Entity
+
+  /tasks/{id}:
+    get:
+      summary: Obtém uma tarefa pelo ID
+      tags:
+        - Tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Detalhes da tarefa recuperados com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "404":
+          description: Task not found
+
+    put:
+      summary: Atualiza uma tarefa pelo ID
+      tags:
+        - Tasks
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Nova Tarefa"
+                description:
+                  type: string
+                  example: "Descrição detalhada da tarefa"
+                status:
+                  type: string
+                  example: "PENDENTE"
+              required:
+                - title
+                - description
+                - status
+      responses:
+        "200":
+          description: Task updated
+        "401":
+          description: Token not provided or invalid
+        "404":
+          description: Task not found
+
+    delete:
+      summary: Deleta uma tarefa pelo ID
+      tags:
+        - Tasks
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Task deleted
+        "401":
+          description: Token not provided or invalid
+        "404":
+          description: Task not found
+        "422":
+          description: Error Unprocessable Entity

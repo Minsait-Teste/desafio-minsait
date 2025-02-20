@@ -6,7 +6,7 @@ const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "API de Autenticação",
+      title: "API do Teste Santander",
       version: "1.0.0",
       description: "Documentação da API de autenticação rodando no localhost:5000",
     },
