@@ -37,6 +37,11 @@ jobs:
       - name: Build the application
         run: npm run build
 
+      - name: Set Git identity
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "mauricio.ecamilo@gmail.com"
+
       # Criar uma tag automaticamente e empurrá-la
       - name: Create Git tag
         run: |
