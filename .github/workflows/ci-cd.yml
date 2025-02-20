@@ -29,22 +29,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set up environment variables
-        run: |
-          echo "postgresql://postgres:postgres@localhost:5432/teste?schema=public" >> .env
+      # - name: Set up environment variables
+      #   run: |
+      #     echo "postgresql://postgres:postgres@localhost:5432/teste?schema=public" >> .env
 
-      - name: Set up environment variables test
-        run: |
-          echo "postgresql://postgres:postgres@localhost:5432/teste?schema=public" >> .env.test
+      # - name: Set up environment variables test
+      #   run: |
+      #     echo "postgresql://postgres:postgres@localhost:5432/teste?schema=public" >> .env.test
     
-      - name: Check environment variable for DATABASE_URL
-        run: |
-          echo $DATABASE_URL
+      # - name: Check environment variable for DATABASE_URL
+      #   run: |
+      #     echo $DATABASE_URL
 
 
-      # # Executar testes unitários
-      # - name: Run unit tests
-      #   run: npm test
+      # Executar testes unitários
+      - name: Run unit tests
+        run: npm test
 
       # # Construir a aplicação
       # - name: Build the application

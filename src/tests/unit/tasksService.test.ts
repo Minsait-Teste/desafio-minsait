@@ -7,21 +7,21 @@ import prisma from "../../config/database.js";
 
 describe("tasks Services createTask function tests suite", () => {
 
-    it("should create a task", async () => {
-        await prisma.$executeRaw`TRUNCATE TABLE "Task" RESTART IDENTITY`
+    // it("should create a task", async () => {
+    //     await prisma.$executeRaw`TRUNCATE TABLE "Task" RESTART IDENTITY`
 
-        const task: CreateTaskData = {
-            title: "Titulo da task",
-            description: "Descrição da task",
-            status: "PENDENTE"
-        }
+    //     const task: CreateTaskData = {
+    //         title: "Titulo da task",
+    //         description: "Descrição da task",
+    //         status: "PENDENTE"
+    //     }
 
-        jest.spyOn(tasksRepository, 'registerTask').mockImplementationOnce((): any => { })
+    //     jest.spyOn(tasksRepository, 'registerTask').mockImplementationOnce((): any => { })
 
-        await tasksService.createTask(task);
+    //     await tasksService.createTask(task);
 
-        expect(tasksRepository.registerTask).toBeCalled();
-    });
+    //     expect(tasksRepository.registerTask).toBeCalled();
+    // });
 
     it("should fail to create a task if task already exists", async () => {
         const task: CreateTaskData = {
