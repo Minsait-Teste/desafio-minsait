@@ -9,7 +9,7 @@ on:
 jobs:
   build_and_release:
     runs-on: ubuntu-latest
-    
+
     env:
       NODE_VERSION: 18
 
@@ -37,6 +37,16 @@ jobs:
       # Instalar dependências
       - name: Install dependencies
         run: npm install
+
+      - name: Run SonarQube analysis
+        run: |
+          npx sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # Executar testes unitários
       - name: Run unit tests
