@@ -29,6 +29,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Set up environment variables
+        run: |
+          echo "postgresql://postgres:postgres@localhost:5432/teste?schema=public" >> .env.test
+
       # Executar testes unitários
       - name: Run unit tests
         run: npm test
