@@ -38,26 +38,28 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.branch.name=main
-
-      # - name: Run SonarQube analysis
-      #   run: |
-      #     npx sonar-scanner \
-      #       -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-      #       -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
-      #       -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-      #       -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+      # - name: SonarCloud Scan
+      #   uses: SonarSource/sonarcloud-github-action@v1
       #   env:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   with:
+      #     args: >
+      #       -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+      #       -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+      #       -Dsonar.host.url=https://sonarcloud.io
+      #       -Dsonar.branch.name=main
+
+      - name: Run SonarQube analysis
+        run: |
+          npx sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.branch.name=main
+
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # Executar testes unitários
       - name: Run unit tests
