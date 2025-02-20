@@ -20,7 +20,14 @@ async function deleteTaskById(id: number) {
 }
 
 async function updateTaskById(task: CreateTaskData, id: number) {
-
+    await prisma.task.update({
+        where: {id},
+        data: {
+            title: task.title,
+            description: task.description,
+            status: task.status
+        }
+    })
 }
 
 export const tasksRepository = {

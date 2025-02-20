@@ -39,8 +39,10 @@ async function checkTaskId (taskId : number) {
 }
 
 function updatedTaskData(updatedTaskData : CreateTaskData, previousTaskData : CreateTaskData) {
-  
 
+    updatedTaskData.title = updatedTaskData.title === "" ? previousTaskData.title : updatedTaskData.title;
+    updatedTaskData.description = updatedTaskData.description === "" ? previousTaskData.description : updatedTaskData.description;
+    
     return updatedTaskData;
 }
 
