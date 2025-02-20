@@ -31,6 +31,10 @@ jobs:
 
       - name: Set up environment variables
         run: |
+          echo "postgresql://postgres:postgres@localhost:5432/teste?schema=public" >> .env
+
+      - name: Set up environment variables test
+        run: |
           echo "postgresql://postgres:postgres@localhost:5432/teste?schema=public" >> .env.test
 
       # Executar testes unitários
