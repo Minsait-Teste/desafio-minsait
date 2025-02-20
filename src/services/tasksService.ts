@@ -40,12 +40,8 @@ async function checkTaskId (taskId : number) {
 
 function updatedTaskData(updatedTaskData : CreateTaskData, previousTaskData : CreateTaskData) {
 
-    // updatedTaskData.title = updatedTaskData.title === "" ? previousTaskData.title : updatedTaskData.title;
-    // updatedTaskData.description = updatedTaskData.description === "" ? previousTaskData.description : updatedTaskData.description;
-    
     if (updatedTaskData.title === "") updatedTaskData.title = previousTaskData.title;
     if (updatedTaskData.description === "") updatedTaskData.description = previousTaskData.description;
-    // if (updatedTaskData.address === "") updatedTaskData.address = previousTaskData.address;
 
     return updatedTaskData;
 }

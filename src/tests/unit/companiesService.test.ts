@@ -115,7 +115,6 @@ describe("tasks Services deleteTask function tests suite", () => {
         const taskId = 10;
     
         jest.spyOn(tasksRepository, "checkTaskById").mockImplementationOnce(() : any => {}); // Retorna null para simular que a task não existe
-        // jest.spyOn(companiesRepository, "checkCompanyById").mockImplementationOnce(() : any => {});
 
         const promise = tasksService.deleteTask(taskId);
     
