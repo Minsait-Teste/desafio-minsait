@@ -26,16 +26,16 @@ jobs:
           fi
         shell: bash
 
-  #     # Configurar a versão do Node.js
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-  #         cache: 'npm'
+      # Configurar a versão do Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
-  #     # Instalar dependências
-  #     - name: Install dependencies
-  #       run: npm install
+      # Instalar dependências
+      - name: Install dependencies
+        run: npm install
 
   #     # Executar testes unitários
   #     - name: Run unit tests
