@@ -9,7 +9,7 @@
     "dev": "nodemon src/index.ts",
     "build": "npx tsc",
     "test": "npm run test:unit",
-    "test:unit": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- -i --coverage --testPathPattern=tests/unit"
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest -- -i --coverage --testPathPattern=tests/unit"
   },
   "keywords": [],
   "author": "",
