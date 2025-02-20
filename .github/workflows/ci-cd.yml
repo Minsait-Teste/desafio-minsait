@@ -50,8 +50,8 @@ jobs:
     # Push da tag usando o GITHUB_TOKEN
       - name: Push Tag to GitHub
         run: |
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} v1.0.14
-          
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} v1.0.${{ github.run_number }}
+
       # Criar uma release no GitHub e anexar o artefato
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
