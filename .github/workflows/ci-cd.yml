@@ -40,8 +40,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # - name: Run unit tests
-      #   run: npm test
+      - name: Run unit tests
+        run: npm test
 
       - name: Build the application
         run: npm run build
@@ -55,25 +55,25 @@ jobs:
           name: release-artifact
           path: .
 
-  # sonar_scan:
-  #   runs-on: ubuntu-latest
-  #   needs: build_and_test
-  #   steps:
-  #     - name: Download Release Artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: release-artifact
-  #         path: .
+  sonar_scan:
+    runs-on: ubuntu-latest
+    needs: build_and_test
+    steps:
+      - name: Download Release Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-artifact
+          path: .
 
-  #     - name: Run SonarQube analysis
-  #       run: |
-  #         npx sonar-scanner \
-  #           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-  #           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
-  #           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-  #           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-  #       env:
-  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Run SonarQube analysis
+        run: |
+          npx sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
