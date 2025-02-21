@@ -46,11 +46,8 @@ jobs:
       - name: Build the application
         run: npm run build
 
-      - name: Copy package json to dist
+      - name: Copy package-json and prisma to dist
         run: npm run postbuild
-
-      - name: Copy prisma to dist
-        run: npm run prisma
 
       - name: Upload Release Artifact
         uses: actions/upload-artifact@v4
@@ -107,5 +104,5 @@ jobs:
             cd /home/ubuntu/app/dist &&
             pkill -f 'node' && 
             npx prisma generate &&
-            npm run start &
+            npm run start
           "

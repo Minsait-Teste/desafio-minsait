@@ -8,8 +8,7 @@
     "start": "node index.js",
     "dev": "nodemon src/index.ts",
     "build": "npx tsc",
-    "prisma": "cp -r prisma dist/",
-    "postbuild": "cp package.json dist/",
+    "postbuild": "cp -r prisma dist/ && cp package.json dist/",
     "test": "npm run test:unit",
     "test:unit": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env jest -- -i --testPathPattern=tests/unit"
   },
