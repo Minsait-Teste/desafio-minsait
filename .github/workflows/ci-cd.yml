@@ -108,9 +108,12 @@ jobs:
           export DATABASE_URL='postgresql://postgres:postgres@localhost:5432/teste?schema=public' &&
           export JWT_SECRET_KEY='chavesecreta' &&
             cd /home/ubuntu/app/dist &&
-            pkill -f 'node' &&
             npx prisma generate &&
-            nohup npm run start > app.log 2>&1 & disown
+            if pm2 list | grep -q 'my-app'; then
+              pm2 restart my-app;
+            else
+              pm2 start /home/ubuntu/app/dist/index.js --name my-app;
+            fi
           "
 
       - name: Clean up SSH Key
