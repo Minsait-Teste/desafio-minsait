@@ -99,7 +99,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           echo "Copying files to EC2..."
-          scp -i private_key.pem -r . $EC2_USER@$EC2_HOST:$DEPLOY_PATH
+          scp -i private_key.pem -r . ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com:/home/ubuntu/app
 
           echo "Connecting to EC2 and configuring environment..."
           ssh -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
