@@ -3,7 +3,7 @@ import "express-async-errors";
 import cors from "cors";
 import router from "./routers/index.js";
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
-import { setupSwagger } from "./swagger.js"; // Importação correta
+import { setupSwagger } from "./swagger.js";
 
 const app = express();
 

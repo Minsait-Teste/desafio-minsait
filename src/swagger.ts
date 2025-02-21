@@ -17,7 +17,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["src/swagger.yaml"], // Caminho para o arquivo Swagger
+  apis: ["src/swagger.yaml"],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

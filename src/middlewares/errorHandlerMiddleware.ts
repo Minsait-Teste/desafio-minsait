@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
 export default function errorHandlerMiddleware
-(error: Error, req: Request, res: Response, next: NextFunction) {
+(error: Error, req: Request, res: Response) {
     if (error.name === "notFound") {
         console.log(error.message);
         res.status(404).send(error.message);
