@@ -104,9 +104,4 @@ jobs:
       - name: Deploy to EC2
         run: |
           scp -r -o StrictHostKeyChecking=no ./dist ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com:/home/ubuntu/app
-          ssh -o StrictHostKeyChecking=no ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com "
-          export DATABASE_URL='postgresql://postgres:postgres@localhost:5432/teste?schema=public' &&
-            cd /home/ubuntu/app/dist &&
-            npx prisma generate &&
-            npm run start
-          "
+          ssh -o StrictHostKeyChecking=no ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com
