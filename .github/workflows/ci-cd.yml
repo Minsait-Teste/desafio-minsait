@@ -98,6 +98,9 @@ jobs:
         run: |
           scp -r -o StrictHostKeyChecking=no ./dist ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com:/home/ubuntu/app
           ssh -o StrictHostKeyChecking=no ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com "
+            export PORT=5000;
+            export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/teste?schema=public;
+            export JWT_SECRET_KEY=chavesecreta
             if pm2 list | grep -q 'my-app'; then
               pm2 restart my-app;
             else
