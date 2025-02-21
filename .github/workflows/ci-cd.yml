@@ -108,5 +108,5 @@ jobs:
           export DATABASE_URL='postgresql://postgres:postgres@localhost:5432/teste?schema=public' &&
             cd /home/ubuntu/app/dist &&
             npx prisma generate &&
-            npm run start
+            npm run start &
           "
