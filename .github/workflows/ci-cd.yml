@@ -110,7 +110,7 @@ jobs:
             cd /home/ubuntu/app/dist &&
             pkill -f 'node' &&
             npx prisma generate &&
-            nohup npm run start & disown
+            pm2 start npm --name 'app' -- run start
           "
 
       - name: Clean up SSH Key
