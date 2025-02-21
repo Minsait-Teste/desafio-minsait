@@ -106,7 +106,8 @@ jobs:
           scp -r -o StrictHostKeyChecking=no ./dist ubuntu@ec2-52-87-243-107.compute-1.amazonaws.com:/home/ubuntu/app
           ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-87-243-107.compute-1.amazonaws.com "
           export DATABASE_URL='postgresql://postgres:postgres@localhost:5432/teste?schema=public' &&
+          export JWT_SECRET_KEY='chavesecreta' &&
             cd /home/ubuntu/app/dist &&
             npx prisma generate &&
-            npm run start &
+            nohup npm run start &
           "
