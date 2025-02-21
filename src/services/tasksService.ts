@@ -35,9 +35,9 @@ async function checkTaskId(taskId: number) {
         throw {
             name: "notFound",
             message: "Task not found"
-        }; // Lançando um erro no formato esperado pelo teste
+        }; 
     }
-    
+
     return response;
 }
 
