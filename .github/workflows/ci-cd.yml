@@ -96,5 +96,6 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          scp -i private_key.pem -r . ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com:/home/ubuntu/app
+          scp -r -o StrictHostKeyChecking=no ./* ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com:/home/ubuntu/app
           ssh -o StrictHostKeyChecking=no ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com "cd /home/ubuntu/app && npm install --production && pm2 restart my-app"
+
