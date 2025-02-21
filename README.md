@@ -1,111 +1,99 @@
-# Desafio Minsait
+Desafio Minsait
 
-## Como rodar o servidor
+Como rodar o servidor
+
 1. Clonar o repositório
-```bash
+
 git clone https://github.com/Minsait-Teste/desafio-minsait.git
-```
-2. Ao entrar na pasta do projeto, instalar as dependências
-```bash
-npm i
-```
-3. Criar um arquivo .env na raíz do projeto com os seguintes campos
-```bash
-PORT=
-DATABASE_URL=
-```
-4. No campo PORT, colocar 5000, no campo JWT_SECRET_KEY, colocar qualque string, e o database seguir o seguinte exemplo:
-```bash
+
+2. Instalar as dependências
+
+Acesse a pasta do projeto e execute:
+
+npm install
+
+3. Configurar variáveis de ambiente
+
+Crie um arquivo .env na raiz do projeto e adicione as seguintes variáveis:
+
+PORT=5000
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/teste?schema=public
-```
+JWT_SECRET_KEY=minha_chave_secreta
 
-5. Criar um banco de dados para teste com o docker compose
-```bash
+PORT: Defina como 5000.
+
+JWT_SECRET_KEY: Defina qualquer string segura.
+
+DATABASE_URL: Utilize o formato indicado acima.
+
+4. Criar o banco de dados para testes
+
+Suba um banco de dados local usando Docker Compose:
+
 docker compose up -d
-```
 
-6. Gerar a migração com o prisma
-```bash
-npx prisma migrate dev
-```
-6. Gerar os modelos/interfaces com o prisma (recomenda-se dar um reload window depois de rodar esse comando)
-```bash
+5. Gerar o cliente Prisma para conexão com o banco
+
 npx prisma generate
-```
-7. Rodar o back-end
-```bash
+
+6. Iniciar o servidor
+
 npm run dev
-```
 
-A seguinte mensagem de sucesso deve aparecer: Server is listening on port 5000.
+Se tudo estiver correto, a seguinte mensagem aparecerá no terminal:
 
-## Como abrir o swagger para testar as rotas
-1. Abra o terminal com a seguinte url:
+Server is listening on port 5000.
 
-```bash
+Como acessar a documentação Swagger
+
+Abra o navegador e acesse:
+
 http://localhost:5000/api-docs/
-```
-## Endpoints utilizados no projeto
 
-1. Rota de geração de token:
-```bash
-POST ("/auth")
+O Swagger contém todas as rotas da aplicação para facilitar os testes.
 
-Formato do Body:
-{
-  "username": "admin",
-  "password": "123456"
-}
+Autenticação
 
-O username e o password devem conter esses valores para retornar o token.
+Antes de testar os endpoints protegidos, gere um token utilizando a rota /auth. O token deve ser incluído no cabeçalho (Authorization: Bearer <token>).
 
-Todas as rotas só funcionam usando esse token para autenticação
+Testando a aplicação pelo terminal
 
-Formato do Header: Authorization: Bearer Token
+Caso prefira não usar o Swagger, utilize os comandos curl abaixo para interagir com a API.
 
-```
+Observação: Para testar no ambiente de produção (EC2 AWS), substitua localhost pelo IP público da instância informado no e-mail.
 
-2. Rota de criação de tasks:
-```bash
-POST ("/tasks")
+Autenticação - Gerar Token (POST /auth)
 
-Formato do Body:
-{
-  "title": "Task 3",
-  "description": "Tarefa 3",
-  "status": "PENDENTE"
-}
+curl -X POST http://localhost:5000/auth \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "123456"}'
 
-Nenhum campo pode estar vazio, e o campo status só aceita os valores PENDENTE e CONCLUIDA.
-```
-3. Rota de busca de tasks:
-```bash
-GET ("/tasks")
-```
-4. Rota de busca de task por id:
-```bash
-GET ("/tasks:id")
-```
+Criar uma tarefa (POST /tasks)
 
-5. Rota de apagar uma task:
-```bash
-DELETE ("/tasks/:id")
+curl -X POST http://localhost:5000/tasks \
+     -H "Authorization: Bearer <token>" \
+     -H "Content-Type: application/json" \
+     -d '{"title": "Task 1", "description": "Tarefa 1", "status": "PENDENTE"}'
 
-Caso seja inserido um id inválido, a aplicação devolve um erro.
-```
-6. Rota de atualizar uma task:
-```bash
-PUT ("/tasks/:id")
+Listar todas as tarefas (GET /tasks)
 
-Formato do Body:
-{
-  "title": "Task 3",
-  "description": "Tarefa 3",
-  "status": "PENDENTE"
-}
-A rota aceita campos vazios
-Caso seja inserido um id inválido, a aplicação devolve um erro.
-```
+curl -X GET http://localhost:5000/tasks \
+     -H "Authorization: Bearer <token>"
 
+Buscar uma tarefa específica (GET /tasks/:id)
 
+curl -X GET http://localhost:5000/tasks/id \
+     -H "Authorization: Bearer <token>"
+
+Atualizar uma tarefa (PUT /tasks/:id)
+
+curl -X PUT http://localhost:5000/tasks/id \
+     -H "Authorization: Bearer <token>" \
+     -H "Content-Type: application/json" \
+     -d '{"title": "Novo Título", "description": "Nova descrição", "status": "PENDENTE"}'
+
+Excluir uma tarefa (DELETE /tasks/:id)
+
+curl -X DELETE http://localhost:5000/tasks/id \
+     -H "Authorization: Bearer <token>"
 
