@@ -84,36 +84,23 @@ jobs:
           name: release-artifact
           path: .
 
-      - name: Create SSH Key
-        run: |
-          echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
-          chmod 400 private_key.pem  # Garante que apenas o dono pode ler a chave
+      # - name: Create SSH Key
+      #   run: |
+      #     echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
+      #     chmod 400 private_key.pem  # Garante que apenas o dono pode ler a chave
 
       # - name: Deploy to Test Environment
       #   run: echo "Deploying to the test environment..."
-      - name: Deploy to EC2
-        env:
-          EC2_USER: ubuntu
-          EC2_HOST: ${{ secrets.EC2_PUBLIC_IP }}
-          DEPLOY_PATH: /home/ubuntu/app
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          echo "Setting up SSH environment..."
-          mkdir -p ~/.ssh          
-          ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
 
-          echo "Copying files to EC2..."
-          scp -i private_key.pem -r . ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com:/home/ubuntu/app
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.EC2_PUBLIC_IP }} >> ~/.ssh/known_hosts
 
-          echo "Connecting to EC2 and configuring environment..."
-          ssh -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
-            cd /home/ubuntu/app
-            echo "DATABASE_URL=${DATABASE_URL}" > .env
-            npm install --omit=dev
-            pm2 restart api || pm2 start npm --name "api" -- run start
-            pm2 save
-            exit
-          EOF
+    - name: Deploy to EC2
+      run: |
+        scp -r -o StrictHostKeyChecking=no ./dist ubuntu@${{ secrets.EC2_PUBLIC_IP }}:/home/ubuntu/app
+        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_PUBLIC_IP }} "cd /home/ubuntu/app && npm install --production && pm2 restart your-app-name"
 
-      - name: Clean up SSH Key
-        run: rm -f private_key.pem
