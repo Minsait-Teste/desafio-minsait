@@ -98,9 +98,10 @@ jobs:
           DEPLOY_PATH: /home/ubuntu/app
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          echo "Adding EC2 host to known_hosts..."
+          echo "Setting up SSH environment..."
+          mkdir -p ~/.ssh          
           ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
-          
+
           echo "Copying files to EC2..."
           scp -i private_key.pem -r . ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com:/home/ubuntu/app
 
