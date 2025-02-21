@@ -15,14 +15,9 @@ PORT=5000
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/teste?schema=public
 JWT_SECRET_KEY=minha_chave_secreta
 ```
-PORT: Defina como 5000.
-
-JWT_SECRET_KEY: Defina qualquer string segura.
-
-DATABASE_URL: Utilize o formato indicado acima.
-
 4. Criar o banco de dados para testes
-Suba um banco de dados local usando Docker Compose:
+   
+- Suba um banco de dados local usando Docker Compose:
 ```bash
 docker compose up -d
 ```
@@ -50,7 +45,7 @@ O Swagger contém todas as rotas da aplicação para facilitar os testes.
 
 ## Autenticação
 
-Antes de testar os endpoints protegidos, gere um token utilizando a rota /auth. O token deve ser incluído no cabeçalho (Authorization: Bearer <token>).
+Antes de testar os endpoints protegidos, gere um token utilizando a rota /auth. O token deve ser incluído no cabeçalho (Authorization: Bearer token).
 
 ## Testando a aplicação pelo terminal
 
