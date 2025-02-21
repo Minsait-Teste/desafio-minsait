@@ -49,6 +49,9 @@ jobs:
       - name: Copy package json to dist
         run: npm run postbuild
 
+      - name: Copy prisma to dist
+        run: npm run prisma
+
       - name: Upload Release Artifact
         uses: actions/upload-artifact@v4
         with:
