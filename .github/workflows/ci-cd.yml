@@ -101,6 +101,6 @@ jobs:
             if pm2 list | grep -q 'my-app'; then
               pm2 restart my-app;
             else
-              pm2 start /home/ubuntu/app/dist/index.js --name my-app;
+              pm2 start /home/ubuntu/app/dist/index.js --name my-app --node-args=\"--loader ts-node/esm\";
             fi
           "
