@@ -94,13 +94,13 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_PUBLIC_IP }} >> ~/.ssh/known_hosts || true
 
-    - name: Deploy to EC2
-      run: |
-        scp -r -o StrictHostKeyChecking=no ./dist ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com:/home/ubuntu/app
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com "
-          if pm2 list | grep -q 'my-app'; then
-            pm2 restart my-app;
-          else
-            pm2 start /home/ubuntu/app/dist/index.js --name my-app;
-          fi
-        "
+      - name: Deploy to EC2
+        run: |
+          scp -r -o StrictHostKeyChecking=no ./dist ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com:/home/ubuntu/app
+          ssh -o StrictHostKeyChecking=no ubuntu@ec2-44-202-10-221.compute-1.amazonaws.com "
+            if pm2 list | grep -q 'my-app'; then
+              pm2 restart my-app;
+            else
+              pm2 start /home/ubuntu/app/dist/index.js --name my-app;
+            fi
+          "
