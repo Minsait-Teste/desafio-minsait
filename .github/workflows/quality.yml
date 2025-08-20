@@ -1,0 +1,12 @@
+name: CI Workflow
+
+on:
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  integration:
+    name: Call CI Workflow
+    uses: Mauricio-Camilo/ci-cd-pipelines/.github/workflows/quality.yml@main
+    secrets: inherit
