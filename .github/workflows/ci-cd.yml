@@ -8,5 +8,5 @@ on:
 jobs:
   integration:
     name: Call CI Workflow
-    uses: Mauricio-Camilo/ci-cd-pipelines/.github/workflows/ci.yml
+    uses: Mauricio-Camilo/ci-cd-pipelines/.github/workflows/ci.yml@main
     secrets: inherit
