@@ -9,4 +9,9 @@ jobs:
   quality_call:
     name: Call CI Workflow
     uses: Mauricio-Camilo/ci-cd-pipelines/.github/workflows/quality.yml@main
-    secrets: inherit
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+      SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      
