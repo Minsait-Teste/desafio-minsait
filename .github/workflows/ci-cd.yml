@@ -3,7 +3,7 @@ name: CI/CD Pipeline for TypeScript API
 on:
   push:
     branches:
-      - main
+      - feature/*
   workflow_dispatch:
 
 jobs:
