@@ -4,7 +4,6 @@ import cors from "cors";
 import router from "./routers/index.js";
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 import { setupSwagger } from "./swagger.js";
-import naoExiste from "./isso-nao-existe.js";
 
 const app = express();
 
