@@ -55,24 +55,37 @@ jobs:
           name: release-artifact
           path: .
 
-      - name: Notify Discord - Success
-        if: success()
+  notify_discord:
+    name: Notify Discord
+    runs-on: ubuntu-latest
+    needs:
+      - validate_files
+      - build_and_test
+    if: always()
+
+    steps:
+      - name: Notify Discord - Failure
+        if: |
+          needs.validate_files.result == 'failure' ||
+          needs.build_and_test.result == 'failure'
         run: |
           curl -X POST ${{ secrets.DISCORD_WEBHOOK_URL }} \
           -H "Content-Type: application/json" \
           -d '{
             "username": "GitHub Actions",
-            "content": "✅ **Build SUCCESS**\n📦 Repo: **'${{ github.repository }}'**\n🌿 Branch: **'${{ github.ref_name }}'**"
+            "content": "❌ **Pipeline FAILED**\n\n📦 **Repo:** ${{ github.repository }}\n🌿 **Branch:** ${{ github.ref_name }}\n👤 **Autor:** ${{ github.actor }}\n\n🔎 **Ver logs:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'
 
-      - name: Notify Discord - Failure
-        if: failure()
+      - name: Notify Discord - Success
+        if: |
+          needs.validate_files.result == 'success' &&
+          needs.build_and_test.result == 'success'
         run: |
           curl -X POST ${{ secrets.DISCORD_WEBHOOK_URL }} \
           -H "Content-Type: application/json" \
           -d '{
             "username": "GitHub Actions",
-            "content": "❌ **Build FAILED**\n📦 Repo: **'${{ github.repository }}'**\n🌿 Branch: **'${{ github.ref_name }}'**"
+            "content": "✅ **Pipeline SUCCESS**\n\n📦 **Repo:** ${{ github.repository }}\n🌿 **Branch:** ${{ github.ref_name }}\n👤 **Autor:** ${{ github.actor }}\n\n🚀 **Execução:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'
 
 
