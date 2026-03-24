@@ -77,7 +77,7 @@ jobs:
         run: |
           npx sonar-scanner \
             -Dsonar.projectKey=Minsait-Teste_desafio-minsait \
-            -Dsonar.organization=Minsait-Teste \
+            -Dsonar.organization=minsait-teste \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
         env:
