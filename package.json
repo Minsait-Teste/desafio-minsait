@@ -10,8 +10,7 @@
     "build": "npx tsc",
     "postbuild": "cp -r prisma dist/ && cp package.json dist/",
     "test": "npm run test:unit",
-    "test:unit": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env jest -- -i --testPathPattern=tests/unit"
-  },
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env jest --coverage -i --testPathPattern=tests/unit"  },
   "keywords": [],
   "author": "",
   "license": "ISC",

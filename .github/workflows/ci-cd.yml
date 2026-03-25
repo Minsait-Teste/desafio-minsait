@@ -75,7 +75,7 @@ jobs:
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run SonarQube analysis
         run: |
@@ -83,10 +83,11 @@ jobs:
             -Dsonar.projectKey=Minsait-Teste_desafio-minsait \
             -Dsonar.organization=minsait-teste \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.sources=src \
             -Dsonar.tests=src/tests \
             -Dsonar.exclusions=**/*.test.ts
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
 
