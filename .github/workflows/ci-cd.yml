@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  # workflow_dispatch:
 
 jobs:
   validate_files:
@@ -26,6 +26,10 @@ jobs:
     needs: validate_files
     env:
       NODE_VERSION: 18
+
+    permissions:
+      security-events: write
+      contents: read
 
     steps:
       - name: Checkout code
