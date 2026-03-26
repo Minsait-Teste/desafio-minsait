@@ -46,6 +46,19 @@ jobs:
       - name: Build the application
         run: npm run build
 
+      # SAST Analysis
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v3        
+
       # - name: Copy package-json and prisma to dist
       #   run: npm run postbuild
 
@@ -55,26 +68,27 @@ jobs:
       #     name: release-artifact
       #     path: .
 
-      - name: Run SonarQube analysis
-        run: |
-          npx sonar-scanner \
-            -Dsonar.projectKey=Minsait-Teste_desafio-minsait \
-            -Dsonar.organization=minsait-teste \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.sources=src \
-            -Dsonar.tests=src/tests \
-            -Dsonar.exclusions=**/*.test.ts \
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
+  #     - name: Run SonarQube analysis
+  #       run: |
+  #         npx sonar-scanner \
+  #           -Dsonar.projectKey=Minsait-Teste_desafio-minsait \
+  #           -Dsonar.organization=minsait-teste \
+  #           -Dsonar.host.url=https://sonarcloud.io \
+  #           -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+  #           -Dsonar.sources=src \
+  #           -Dsonar.tests=src/tests \
+  #           -Dsonar.exclusions=**/*.test.ts \
+  #           -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
 
-      - name: SonarCloud Quality Gate
-        uses: SonarSource/sonarqube-quality-gate-action@v1.1.0
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_PROJECT_KEY: Minsait-Teste_desafio-minsait
+  # ## Blocks pipeline if did not pass quality gate. Activate only for production
+  #     - name: SonarCloud Quality Gate
+  #       uses: SonarSource/sonarqube-quality-gate-action@v1.1.0
+  #       timeout-minutes: 5
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #         SONAR_PROJECT_KEY: Minsait-Teste_desafio-minsait
 
 
   # sonar_scan:
